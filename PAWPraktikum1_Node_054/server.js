@@ -8,30 +8,34 @@ const morgan = require("morgan");
 const presensiRoutes = require("./routes/presensi");
 const reportRoutes = require("./routes/reports");
 
+const authRoutes = require('./routes/auth');
+
 
 // Middleware
-app.use(cors()); // [cite: 84]
-app.use(express.json()); // 
+app.use(cors()); 
+app.use(express.json()); 
 app.use(morgan("dev"));
 
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`); // [cite: 87]
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`); 
   next(); 
 });
 
 app.get('/', (req, res) => {
-  res.send('Home Page for API'); // [cite: 90, 91]
+  res.send('Home Page for API'); 
 });
 
 // Panggil rute buku
-const bookRoutes = require('./routes/books'); // [cite: 128]
+const bookRoutes = require('./routes/books'); 
 
-// Gunakan rute buku dengan prefix /api/books
-app.use('/api/books', bookRoutes); // [cite: 129]
+
+app.use('/api/books', bookRoutes); 
 app.use("/api/presensi", presensiRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/auth", authRoutes);
+
 
 
 app.listen(PORT, () => {
-  console.log(`Express server running at http://localhost:${PORT}/`); // [cite: 93, 94]
+  console.log(`Express server running at http://localhost:${PORT}/`); 
 });

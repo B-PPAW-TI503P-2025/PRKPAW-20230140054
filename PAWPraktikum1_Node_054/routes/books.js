@@ -1,37 +1,34 @@
-const express = require('express'); // [cite: 98]
-const router = express.Router(); // [cite: 99]
+const express = require('express'); 
+const router = express.Router(); 
 
-// Data sementara dalam bentuk array [cite: 100]
+
 let books = [
-  {id: 1, title: 'Book 1', author: 'Author 1'}, // [cite: 101]
-  {id: 2, title: 'Book 2', author: 'Author 2'}  // [cite: 102]
+  {id: 1, title: 'Book 1', author: 'Author 1'}, 
+  {id: 2, title: 'Book 2', author: 'Author 2'}  
 ];
 
-// GET semua buku [cite: 104]
 router.get('/', (req, res) => {
-  res.json(books); // [cite: 105]
+  res.json(books); 
 });
 
-// GET buku berdasarkan ID [cite: 107]
 router.get('/:id', (req, res) => {
-  const book = books.find(b => b.id === parseInt(req.params.id)); // [cite: 108]
-  if (!book) return res.status(404).send('Book not found'); // [cite: 109]
-  res.json(book); // [cite: 110]
+  const book = books.find(b => b.id === parseInt(req.params.id)); 
+  if (!book) return res.status(404).send('Book not found'); 
+  res.json(book); 
 });
 
-// POST (membuat) buku baru [cite: 112]
 router.post('/', (req, res) => {
-  const { title, author } = req.body; // [cite: 113]
+  const { title, author } = req.body; 
   if (!title || !author) {
-    return res.status(400).json({ message: 'Title and author are required' }); // [cite: 114, 115]
+    return res.status(400).json({ message: 'Title and author are required' }); 
   }
   const newBook = {
-    id: books.length + 1, // [cite: 118]
-    title, // [cite: 119]
-    author // [cite: 120]
+    id: books.length + 1, 
+    title, 
+    author 
   };
-  books.push(newBook); // [cite: 122]
-  res.status(201).json(newBook); // [cite: 123]
+  books.push(newBook); 
+  res.status(201).json(newBook); 
 });
 
-module.exports = router; // [cite: 125]
+module.exports = router; 
