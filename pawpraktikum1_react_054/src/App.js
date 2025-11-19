@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import LoginPage from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
+import DashboardPage from './components/DashboardPage';
 
 function App() {
-  const [nama, setNama] = useState('');
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h2>Masukkan Nama Anda:</h2>
-        <input
-          type="text"
-          placeholder="Ketik nama di sini..."
-          value={nama}
-          onChange={(e) => setNama(e.target.value)}
-          style={{ padding: '10px', fontSize: '18px', margin: '20px' }}
-        />
-        {/* Pesan akan ditampilkan jika nama sudah diisi */}
-        {nama && <h1>Hello, {nama}!</h1>}
-      </header>
-    </div>
+    <Router>
+      <div>
+        {/* Navigasi ini bisa dihapus jika tidak diperlukan */}
+        <nav className="p-4 bg-gray-100">
+          <Link to="/login" className="mr-4">Login</Link>
+          <Link to="/register">Register</Link>
+        </nav>
+        
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/" element={<LoginPage />} /> 
+        </Routes>
+      </div>
+    </Router>
   );
 }
-
 export default App;
