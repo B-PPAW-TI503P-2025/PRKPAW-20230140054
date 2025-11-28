@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { setToken } from '../utils/auth';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -20,7 +21,8 @@ function LoginPage() {
       });
 
       const token = response.data.token;
-      localStorage.setItem('token', token); 
+      // 1. Ganti localStorage.setItem menjadi setToken()
+      setToken(token);
 
       navigate('/dashboard');
 

@@ -8,6 +8,7 @@
  	  try {
  	    const { id: userId, nama: userName } = req.user;
  	    const waktuSekarang = new Date();
+		const { latitude, longitude} = req.body
  	
  	    // 3. Ubah cara mencari data menggunakan 'findOne' dari Sequelize
  	    const existingRecord = await Presensi.findOne({
@@ -23,13 +24,13 @@
  	    // 4. Ubah cara membuat data baru menggunakan 'create' dari Sequelize
  	    const newRecord = await Presensi.create({
  	      userId: userId,
- 	      nama: userName,
  	      checkIn: waktuSekarang,
+		  latitude: latitude || null,
+		  longitude: longitude || null
  	    });
  	    
  	    const formattedData = {
  	        userId: newRecord.userId,
- 	        nama: newRecord.nama,
  	        checkIn: format(newRecord.checkIn, "yyyy-MM-dd HH:mm:ssXXX", { timeZone }),
  	        checkOut: null
  	    };
@@ -70,7 +71,6 @@
  	
  	    const formattedData = {
  	        userId: recordToUpdate.userId,
- 	        nama: recordToUpdate.nama,
  	        checkIn: format(recordToUpdate.checkIn, "yyyy-MM-dd HH:mm:ssXXX", { timeZone }),
  	        checkOut: format(recordToUpdate.checkOut, "yyyy-MM-dd HH:mm:ssXXX", { timeZone }),
  	    };
@@ -99,11 +99,12 @@ exports.deletePresensi = async (req, res) => {
         .status(404)
         .json({ message: "Catatan presensi tidak ditemukan." });
     }
-    if (recordToDelete.userId !== userId) {
+    if (recordToDelete.userId !== userId && role !== 'admin') {
       return res
         .status(403)
-        .json({ message: "Akses ditolak: Anda bukan pemilik catatan ini." });
+        .json({ message: "Akses ditolak: Anda bukan pemilik catatan ini dan bukan Admin." });
     }
+
     await recordToDelete.destroy();
     res.status(204).send();
   } catch (error) {
@@ -116,11 +117,11 @@ exports.deletePresensi = async (req, res) => {
 exports.updatePresensi = async (req, res) => {
   try {
     const presensiId = req.params.id;
-    const { checkIn, checkOut, nama } = req.body;
-    if (checkIn === undefined && checkOut === undefined && nama === undefined) {
+    const { checkIn, checkOut } = req.body;
+    if (checkIn === undefined && checkOut === undefined) {
       return res.status(400).json({
         message:
-          "Request body tidak berisi data yang valid untuk diupdate (checkIn, checkOut, atau nama).",
+          "Request body tidak berisi data yang valid untuk diupdate (checkIn atau checkOut).",
       });
     }
     const recordToUpdate = await Presensi.findByPk(presensiId);
@@ -132,7 +133,6 @@ exports.updatePresensi = async (req, res) => {
 
     recordToUpdate.checkIn = checkIn || recordToUpdate.checkIn;
     recordToUpdate.checkOut = checkOut || recordToUpdate.checkOut;
-    recordToUpdate.nama = nama || recordToUpdate.nama;
     await recordToUpdate.save();
 
     res.json({

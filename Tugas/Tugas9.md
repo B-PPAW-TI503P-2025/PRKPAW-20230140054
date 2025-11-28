@@ -1,0 +1,5 @@
+![alt text](<ss/tugas9/endpoint check-in.png>) 
+![alt text](ss/tugas9/check-in.png) 
+![alt text](ss/tugas9/check-out.png) 
+![alt text](ss/tugas9/report.png) 
+![alt text](<ss/tugas9/tabel presensi.png>)
