@@ -77,11 +77,12 @@ function ReportPage() {
 
   // --- FUNGSI HELPER URL GAMBAR ---
   // Pastikan field 'imagePath' sesuai dengan response JSON dari backend Anda
-  const getImageUrl = (path) => {
-    if (!path) return null;
-    // Jika path sudah lengkap (http...), gunakan langsung. Jika tidak, tambahkan localhost
-    return path.startsWith('http') ? path : `http://localhost:3001${path}`;
-  };
+const getImageUrl = (path) => {
+  if (!path) return null;
+  // Tambahkan / setelah 3001 dan ganti \ menjadi /
+  const cleanPath = path.replace(/\\/g, '/');
+  return path.startsWith('http') ? path : `http://localhost:3001/${cleanPath}`;
+};
 
   return (
     <div className="max-w-6xl mx-auto p-8 relative">
@@ -164,12 +165,12 @@ function ReportPage() {
 
                     {/* --- ISI KOLOM FOTO --- */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {presensi.buktiFoto ? ( // Asumsi nama field dari DB adalah 'image'
+                      {presensi.buktiFoto ? ( 
                         <img 
                           src={getImageUrl(presensi.buktiFoto)}
                           alt="Bukti"
                           className="w-16 h-16 object-cover rounded cursor-pointer hover:opacity-80 border"
-                          onClick={() => setSelectedImage(getImageUrl(presensi.image))}
+                          onClick={() => setSelectedImage(getImageUrl(presensi.buktiFoto))}
                         />
                       ) : (
                         <span className="text-gray-400 italic">No Photo</span>

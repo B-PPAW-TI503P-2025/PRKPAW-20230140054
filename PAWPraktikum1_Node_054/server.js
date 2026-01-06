@@ -4,6 +4,7 @@ const app = express();
 const PORT = 3001; 
 const morgan = require("morgan");
 const path = require('path'); 
+const iotRoutes = require("./routes/iot");
 
 // Impor router
 const presensiRoutes = require("./routes/presensi");
@@ -35,6 +36,7 @@ app.use("/api/presensi", presensiRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/api/iot", iotRoutes);
 
 
 
