@@ -32,6 +32,7 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                     <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</Link>
                     <Link to="/presensi" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Presensi</Link>
+                    <Link to="/monitoring" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Monitoring Suhu</Link>
                     
                     {isAdmin && (
                         <Link to="/reports" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">

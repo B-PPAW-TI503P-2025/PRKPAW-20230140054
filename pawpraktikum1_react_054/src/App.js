@@ -7,6 +7,7 @@ import DashboardPage from './components/DashboardPage';
 import Navbar from './components/Navbar'; 
 import PresensiPage from './components/PresensiPage'; 
 import ReportPage from './components/ReportPage';
+import SensorPage from './components/SensorPage';
 import { isAuthenticated, getUserData } from './utils/auth';
 
 const MainLayout = () => {
@@ -48,6 +49,7 @@ function App() {
             <Route element={<AdminRoute />}>
                 <Route path="/reports" element={<ReportPage />} /> 
             </Route>
+            <Route path="/monitoring" element={<SensorPage />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
